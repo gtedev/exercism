@@ -15,6 +15,8 @@ rnaAcc  (acc, prevC, success) c =
    (Nothing, _, (_, _, _)) -> (acc, c, False)
    (Just x, _, (_, _, _))  ->  (acc ++ x, c, True)
 
+
+-- for information: "" = [] =>  that is why the first test works, foldl does nothing as there is no element.
 rnaMapFold:: String -> (String, Char, Bool)
 rnaMapFold = 
     let initValue = ([], '_' , True)
