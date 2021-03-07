@@ -33,15 +33,22 @@ getBands resistor =
   case resistor of
   Resistor a -> a
 
-toZeroString:: Int -> String
-toZeroString n = replicate n '0'
+ohmsToStringComputer:: Int -> String
+ohmsToStringComputer n
+ | giga > 0 = show giga ++ " gigaohms"
+ | mega > 0 = show mega ++ " megaohms"
+ | kilo > 0 = show kilo ++ " kiloohms"
+ | otherwise = show n ++ " ohms"
+ where giga = n `div` 10^9
+       mega = n `div` 10^6
+       kilo = n `div` 10^3
+
 
 label :: Resistor -> String
 label resistor =
-  let (band1, band2, band3) = getBands resistor  in
-  let band12String = show (10 * colorValue band1 + colorValue band2) in
-  let band3String = toZeroString (colorValue band3) in
-  band12String ++ band3String ++ " ohms"
+  let ohmsValue = ohms resistor  in
+  let ohmsToString = ohmsToStringComputer ohmsValue in
+  ohmsToString
 
 ohms :: Resistor -> Int
 ohms resistor =
