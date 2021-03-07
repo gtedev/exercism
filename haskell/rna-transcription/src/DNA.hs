@@ -2,21 +2,21 @@ module DNA (toRNA) where
 import qualified Data.Map as Map
 
 
-rnaMap:: Char -> Either Char String
-rnaMap c =
-    let val = Map.lookup c dict
+rnaMap:: String -> Either Char String
+rnaMap [] = Right []
+rnaMap (x:_) =
+    let val = Map.lookup x dict
     in case val of
 
-    Nothing -> Left c
-    Just x -> Right x
+    Nothing -> Left x
+    Just xx -> Right xx
 
     where dict = Map.fromList [('G', "C"),('C', "G"),('T', "A"),('A', "U")]
 
 
 rnaRun:: String -> String -> Either Char String
 rnaRun  acc input =
-  let c  = head input in
-  let val = rnaMap c in
+  let val = rnaMap input in
   case (val, acc, input) of
   (_, _, []) -> Right acc
   (Left _, _, _) -> val
