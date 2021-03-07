@@ -33,8 +33,8 @@ getBands resistor =
   case resistor of
   Resistor a -> a
 
-ohmsToStringComputer:: Int -> String
-ohmsToStringComputer n
+ohmsToString:: Int -> String
+ohmsToString n
  | giga > 0 = show giga ++ " gigaohms"
  | mega > 0 = show mega ++ " megaohms"
  | kilo > 0 = show kilo ++ " kiloohms"
@@ -46,9 +46,8 @@ ohmsToStringComputer n
 
 label :: Resistor -> String
 label resistor =
-  let ohmsValue = ohms resistor  in
-  let ohmsToString = ohmsToStringComputer ohmsValue in
-  ohmsToString
+  let ohmsValue = ohms resistor in
+  ohmsToString ohmsValue
 
 ohms :: Resistor -> Int
 ohms resistor =
