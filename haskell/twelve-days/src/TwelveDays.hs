@@ -37,7 +37,7 @@ toNumberText n =
 reciteGift:: Int -> String
 reciteGift n =
     let quantity = getGiftQuantity $ toGift n in
-    let name = getGifName $ toGift n in
+    let name     = getGifName      $ toGift n in
     quantity ++ " " ++ name
 
 reciteFirstPart:: Int -> String
@@ -47,19 +47,19 @@ reciteFirstPart n =
 
 reciteSecondPart:: Int -> String -> String
 reciteSecondPart n acc
- | n == 0 = acc
- | n == 1 && null acc =  reciteGiftValue
- | n == 1 =  acc ++ ", and " ++ reciteGiftValue
- | n > 1 && null acc =  reciteSecondPart (n-1) reciteGiftValue
- | otherwise  = reciteSecondPart (n-1) ( acc ++ ", " ++  reciteGiftValue)
+ | n == 0             = acc
+ | n == 1 && null acc = reciteGiftValue
+ | n == 1             = acc ++ ", and " ++ reciteGiftValue
+ | n > 1 && null acc  = reciteSecondPart (n-1) reciteGiftValue
+ | otherwise          = reciteSecondPart (n-1) ( acc ++ ", " ++  reciteGiftValue)
 
   where reciteGiftValue = reciteGift n
 
 reciteSentence:: [String] -> Int -> [String]
 reciteSentence acc start =
-    let first = reciteFirstPart start in
-    let second = reciteSecondPart start [] in
-    let sentence = first ++ second ++ "." in
+    let first    = reciteFirstPart start     in
+    let second   = reciteSecondPart start [] in
+    let sentence = first ++ second ++ "."    in
     acc ++ [sentence]
 
 recite :: Int -> Int -> [String]
