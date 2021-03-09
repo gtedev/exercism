@@ -1,0 +1,10 @@
+-- https://repl.it/languages/haskell
+
+import Data.Char;
+
+isbnNumbers:: String -> String
+isbnNumbers s =
+    let digitOrX = filter (\c -> isDigit c || c == 'X') s in
+    digitOrX
+
+main = putStrLn ("Gerard " ++ (isbnNumbers "3-598-21507-X"))
