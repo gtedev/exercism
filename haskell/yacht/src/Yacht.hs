@@ -27,14 +27,31 @@ yacht Fives  xs = filterSum 5 xs
 yacht Sixes  xs = filterSum 6 xs
 
 yacht FullHouse xs = if checkFullHouse  then sum xs else  0
-   where checkFullHouse = (== ) 2 (length $ removeDuplicate xs)
-         removeDuplicate = map head . group . sort
+   where checkFullHouse = isTwoGroup && firstGroupIs2Or3
+         isTwoGroup =  length removeDuplicate == 2
+         firstGroupIs2Or3 = length firstGroup == 2 ||  length firstGroup == 3
+         removeDuplicate = (map head . group . sort) xs
+         firstGroup = (head . group . sort) xs
 
-yacht FourOfAKind [a, b, c, d, e] = if checkFourOfAKind  then sum [a, b, c, d, e] else  0
-   where checkFourOfAKind  = a==b && b==c && c==d
+yacht FourOfAKind xs = if checkFourOfAKind  then 4 * head getGroup4 else  0
+   where checkFourOfAKind = (isOneGroup || isTwoGroup) && firstGroupIs4Or1
+         isTwoGroup =  length removeDuplicate == 2
+         isOneGroup =  length removeDuplicate == 1
+         firstGroupIs4Or1 = length firstGroup == 1 || length firstGroup >= 4
+         removeDuplicate = (map head . group . sort) xs
+         firstGroup = (head . group . sort) xs
+         getGroup4 = head . filter (\l -> length l >= 4) $ (group . sort) xs
 
-yacht LittleStraight [1, 2, 3, 4, 5] = 30
-yacht BigStraight [2, 3, 4, 5, 6] = 30
+yacht LittleStraight xs = if checkLittleStraight  then 30 else  0
+      where checkLittleStraight = length xs == 5 && all (\x -> x >= 1 && x <= 5) xs && is5Group
+            is5Group = (==) 5 (length removeDuplicate)
+            removeDuplicate = (map head . group . sort) xs
+
+yacht BigStraight xs = if checkBigStraight  then 30 else  0
+      where checkBigStraight = length xs == 5 && all (\x -> x >= 2 && x <= 6) xs && is5Group
+            is5Group = (==) 5 (length removeDuplicate)
+            removeDuplicate = (map head . group . sort) xs
+
 yacht Choice xs  = sum xs
 
 yacht Yacht [a, b, c, d, e] = if checkYacht  then 50 else 0
