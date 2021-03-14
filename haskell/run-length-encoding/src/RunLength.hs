@@ -36,3 +36,30 @@ encode text =
     let encodeGrpLetter = (\grp ->  quantify grp ++ [head grp]) in
     let encodedGrps = map encodeGrpLetter $ group text in
     concat encodedGrps
+
+
+-- one elegant solution
+-- module RunLength (decode, encode) where
+
+-- import           Data.Char (isDigit)
+
+
+-- decode :: String -> String
+-- decode "" = ""
+-- decode text = replicate count x ++ decode xs
+--   where
+--     (countStr, x:xs) = span isDigit text
+--     count = case countStr of
+--         "" -> 1
+--         s  -> read s
+
+-- encode :: String -> String
+-- encode "" = ""
+-- encode (x:xs) = countStr ++ [x] ++ encode rest
+--   where
+--     (matching, rest) = span (== x) xs
+--     countStr = case matching of
+--         "" -> ""
+--         _  -> show $ length matching + 1
+
+--https://exercism.io/tracks/haskell/exercises/run-length-encoding/solutions/d0ac499afe69495c8cea82b27239832a
