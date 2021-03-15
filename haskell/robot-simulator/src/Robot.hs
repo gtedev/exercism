@@ -10,7 +10,8 @@ data Bearing = North
              | East
              | South
              | West
-             deriving (Eq, Show)
+            --  deriving (Eq, Show, Enum)
+             deriving (Eq, Show, Enum)
 
 data Robot = Robot 
     { dir:: Bearing
@@ -25,7 +26,10 @@ getNextDir South 'L' =  East
 getNextDir South 'R' =  West
 getNextDir West  'L' =  South
 getNextDir West  'R' =  North
-getNextDir dir    _  =  dir
+getNextDir dir _  =  dir
+-- getNextDir dir 'L'  =  pred dir
+-- getNextDir dir 'R'  =  succ dir
+-- getNextDir dir _  =  dir
 
 getNextCoord:: Bearing -> (Integer, Integer) -> Char -> (Integer, Integer)
 getNextCoord West  (x,y) 'A' = (x - 1, y)
