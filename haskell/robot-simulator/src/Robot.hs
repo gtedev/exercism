@@ -13,7 +13,7 @@ data Bearing = North
             --  deriving (Eq, Show, Enum)
              deriving (Eq, Show, Enum)
 
-data Robot = Robot 
+data Robot = Robot
     { dir:: Bearing
     , coord:: (Integer, Integer) }
 
@@ -45,7 +45,7 @@ coordinates :: Robot -> (Integer, Integer)
 coordinates (Robot _ coord) = coord
 
 mkRobot :: Bearing -> (Integer, Integer) -> Robot
-mkRobot direction coordinates = 
+mkRobot direction coordinates =
     Robot { dir = direction, coord = coordinates }
 
 nextMove :: Robot -> Char -> Robot
@@ -55,5 +55,4 @@ nextMove (Robot dir coord) x =
     Robot { dir = nextDir, coord = nextCoord }
 
 move :: Robot -> String -> Robot
-move robot [] = robot 
-move robot (x:xs) = move (nextMove robot x) xs
+move = foldl nextMove
