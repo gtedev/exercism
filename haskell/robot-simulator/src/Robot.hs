@@ -17,26 +17,26 @@ data Robot = Robot
     { dir:: Bearing
     , coord:: (Integer, Integer) }
 
-getNextDir:: Bearing -> Char -> Bearing
-getNextDir North 'L' =  West
-getNextDir North 'R' =  East
-getNextDir East  'L' =  North
-getNextDir East  'R' =  South
-getNextDir South 'L' =  East
-getNextDir South 'R' =  West
-getNextDir West  'L' =  South
-getNextDir West  'R' =  North
-getNextDir dir _  =  dir
--- getNextDir dir 'L'  =  pred dir
--- getNextDir dir 'R'  =  succ dir
--- getNextDir dir _  =  dir
+getNextDirOrDefault:: Bearing -> Char -> Bearing
+getNextDirOrDefault North 'L' =  West
+getNextDirOrDefault North 'R' =  East
+getNextDirOrDefault East  'L' =  North
+getNextDirOrDefault East  'R' =  South
+getNextDirOrDefault South 'L' =  East
+getNextDirOrDefault South 'R' =  West
+getNextDirOrDefault West  'L' =  South
+getNextDirOrDefault West  'R' =  North
+getNextDirOrDefault dir _  =  dir
+-- getNextDirOrDefault dir 'L'  =  pred dir
+-- getNextDirOrDefault dir 'R'  =  succ dir
+-- getNextDirOrDefault dir _  =  dir
 
-getNextCoord:: Bearing -> (Integer, Integer) -> Char -> (Integer, Integer)
-getNextCoord West  (x,y) 'A' = (x - 1, y)
-getNextCoord East  (x,y) 'A' = (x + 1, y)
-getNextCoord South (x,y) 'A' = (x    , y - 1)
-getNextCoord North (x,y) 'A' = (x    , y + 1)
-getNextCoord _      coord _  = coord
+getNextCoordOrDefault:: Bearing -> (Integer, Integer) -> Char -> (Integer, Integer)
+getNextCoordOrDefault West  (x,y) 'A' = (x - 1, y)
+getNextCoordOrDefault East  (x,y) 'A' = (x + 1, y)
+getNextCoordOrDefault South (x,y) 'A' = (x    , y - 1)
+getNextCoordOrDefault North (x,y) 'A' = (x    , y + 1)
+getNextCoordOrDefault _      coord _  = coord
 
 bearing :: Robot -> Bearing
 bearing (Robot dir _) = dir
@@ -50,9 +50,9 @@ mkRobot direction coordinates =
 
 nextMove :: Robot -> Char -> Robot
 nextMove (Robot dir coord) x =
-    let nextDirOrDefault   = getNextDir dir x in
-    let nextCoordOrDefault = getNextCoord nextDirOrDefault coord x in
-    Robot { dir = nextDirOrDefault, coord = nextCoordOrDefault }
+    let nextDir   = getNextDirOrDefault dir x in
+    let nextCoord = getNextCoordOrDefault nextDir coord x in
+    Robot { dir = nextDir, coord = nextCoord }
 
 move :: Robot -> String -> Robot
 move robot [] = robot 
