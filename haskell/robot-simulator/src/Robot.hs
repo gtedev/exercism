@@ -32,8 +32,8 @@ getNextDirOrDefault dir _  =  dir
 -- getNextDirOrDefault dir _  =  dir
 
 getNextCoordOrDefault:: Bearing -> (Integer, Integer) -> Char -> (Integer, Integer)
-getNextCoordOrDefault West  (x,y) 'A' = (x - 1, y)
-getNextCoordOrDefault East  (x,y) 'A' = (x + 1, y)
+getNextCoordOrDefault West  (x,y) 'A' = (x - 1, y    )
+getNextCoordOrDefault East  (x,y) 'A' = (x + 1, y    )
 getNextCoordOrDefault South (x,y) 'A' = (x    , y - 1)
 getNextCoordOrDefault North (x,y) 'A' = (x    , y + 1)
 getNextCoordOrDefault _      coord _  = coord
